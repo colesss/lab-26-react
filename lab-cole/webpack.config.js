@@ -1,66 +1,56 @@
 'use strict';
 
-//Class Code \/ \/ \/
-
-// Dynamic Script and Style Tags
+// dynamic script and link
 const HTMLPlugin = require('html-webpack-plugin');
-
-// Makes a separate CSS bundle
+// create a separate css bundle
 const ExtractPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-
-  // Load this and everythning it cares about
   entry: `${__dirname}/src/main.js`,
-  
-  devtool: 'source-map',
-  
-  // Stick it into the "path" folder with that file name
+  // configured the sourceMap with the devtool prop
+  // it maps errors to their appropriate modules and line number
+  devtool: 'cheap-eval-source-map',
+  // bundle output
   output: {
     filename: 'bundle.[hash].js',
-    path: `${__dirname}/build`
-  }, 
-  
+    path: `${__dirname}/build`,
+  },
+  // plugins
   plugins: [
+    // generates an index.html with dynamic script and link tags
     new HTMLPlugin({
-      template: `${__dirname}/src/index.html`
+      template: `${__dirname}/src/index.html`,
     }),
-    new ExtractPlugin('bundle.[hash].css')
+    // generates a css bundle from the output of the style loader
+    new ExtractPlugin('bundle.[hash].css'),
   ],
-    
   module: {
+    // loaders (runs from the bottom up, similar to pop loaders off stack)
     rules: [
-      // If it's a .js file not in node_modules, use the babel-loader
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
-      },  
-      // If it's a .scss file 
+        // runs third and last
+        loader: 'babel-loader',
+      },
       {
         test: /\.scss$/,
+        // runs second
         loader: ExtractPlugin.extract({
-          // These get loaded in reverse order and the output of one pipes into the other (think of a then)
           use: [
-            {
-              loader: 'css-loader', 
-              options: {
-                sourceMap:true
-              }
-            },
+            'css-loader',
             'resolve-url-loader',
             {
+              // runs first
               loader: 'sass-loader',
               options: {
                 sourceMap: true,
-                includePaths:[`${__dirname}/src/style`]
-              }
-            }
-          ]
+                includePaths: [`${__dirname}/src/style`],
+              },
+            },
+          ],
         })
       },
-            
-    ]
+    ],
   }
-    
 }

@@ -1,47 +1,53 @@
-'use strict';
+// import assets
+import './style/main.scss';
 
+// import npm packages
 import React from 'react';
 import ReactDOM from 'react-dom';
+import cowsay from 'cowsay-browser'; // don't capitalize cowsay, it is not a constructor
+import faker from 'faker'; // don't capitalize faker, it is not a constructor
 
-import './style/main.scss'
 
 class Header extends React.Component {
   render() {
     return (
       <header>
-        <h1>Generate Cowsay Lorem</h1>
+        <h1> Generate Cowsay Lorem </h1>
       </header>
     )
   }
 }
 
+// write module
 class App extends React.Component {
-  
   constructor(props) {
-    super(props);
-    
-    this.updateState = this.updateState.bind(this);
-
+    // super is a reference to React.Component
+    super(props)
     this.state = {
-      cowsay: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-    };
-  }
+      content: 'Cowsay',
+    }
 
-  updateState(cowsay) {
-    //let cowsay? add personal code, if I can figure out how to do cowsay stuff...
+    this.handleCowsay = this.handleCowsay.bind(this);
+  };
+
+  handleCowsay() {
+    this.setState({
+      content: cowsay.say({text: faker.lorem.words(5)}),
+    });
   };
 
   render() {
+    let {content} = this.state
+    // The <pre> tag defines preformatted text
     return (
       <div>
         <Header />
-        <div id="cowsayWrapper">
-          <div id="cowsay">{this.state.cowsay}</div>
-        </div>
+        <button onClick={this.handleCowsay}> Click Me! </button>
+        <pre> {content} </pre> 
       </div>
     )
   }
-
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));//shouldn't <App/> aactually be <App />? It's a self closing tag, yeah?
+// export module
+ReactDOM.render(<App />, document.getElementById('root'))

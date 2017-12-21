@@ -1,12 +1,15 @@
 {
-  "name": "lab-cole",
+  "name": "lab-26",
   "version": "1.0.0",
-  "description": "",
+  "description": "lab-26-react",
   "main": "webpack.config.js",
   "scripts": {
+    "watch": "webpack-dev-server --inline --hot",
+    "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "keywords": [],
+  "author": "Cole Allen",
   "license": "ISC",
   "dependencies": {
     "babel-core": "^6.26.0",
@@ -14,15 +17,18 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
+    "cowsay-browser": "^1.1.8",
     "css-loader": "^0.28.7",
     "extract-text-webpack-plugin": "^3.0.2",
+    "faker": "^4.1.0",
     "html-webpack-plugin": "^2.30.1",
+    "lodash": "^4.17.4",
     "node-sass": "^4.7.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "resolve-url-loader": "^2.2.0",
+    "resolve-url-loader": "^2.2.1",
     "sass-loader": "^6.0.6",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.5"
+    "webpack-dev-server": "^2.9.7"
   }
 }
